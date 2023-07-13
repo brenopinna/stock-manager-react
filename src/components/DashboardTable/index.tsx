@@ -19,11 +19,15 @@ export default function DashboardTable({
   }
 
   return (
-    <table>
-      <DashboardTableDataContext.Provider value={{ titles, data }}>
-        <TableHead />
-        <TableBody moreActions={moreActions} />
-      </DashboardTableDataContext.Provider>
-    </table>
+    <div className="relative">
+      <div className="absolute grid w-full overflow-auto">
+        <table>
+          <DashboardTableDataContext.Provider value={{ titles, data }}>
+            <TableHead />
+            <TableBody moreActions={moreActions} />
+          </DashboardTableDataContext.Provider>
+        </table>
+      </div>
+    </div>
   )
 }

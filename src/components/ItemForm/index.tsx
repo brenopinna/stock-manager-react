@@ -75,7 +75,7 @@ export default function ItemForm({ action }: ItemFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-[minmax(100%, 800px)] mx-auto auto-cols-auto grid grid-cols-4 gap-6">
+      className="w-full max-w-[900px] mx-auto auto-cols-auto grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-4 gap-6">
       <InputContainer>
         <label htmlFor="name">Nome</label>
         <Input
@@ -95,6 +95,7 @@ export default function ItemForm({ action }: ItemFormProps) {
           onChange={(e) => setAmount(+e.target.value)}
           type="number"
           min={1}
+          max={Number.MAX_SAFE_INTEGER}
           step={1}
           name="amount"
           id="amount"
@@ -108,6 +109,7 @@ export default function ItemForm({ action }: ItemFormProps) {
           onChange={(e) => setPrice(+e.target.value)}
           type="number"
           min={0.01}
+          max={Number.MAX_SAFE_INTEGER}
           step={0.01}
           name="price"
           id="price"

@@ -1,3 +1,4 @@
+import { shortDataContent } from "../../../utils/shortDataContent"
 import Delete from "../../Buttons/Delete"
 import Details from "../../Buttons/Details"
 import Update from "../../Buttons/Update"
@@ -11,11 +12,15 @@ interface TableBodyRowProps {
 export default function TableBodyRow({ row, moreActions, id }: TableBodyRowProps) {
   return (
     <tr>
-      {row.map((data) => (
-        <td key={id} className="text-left p-5 font-normal">
-          {data}
-        </td>
-      ))}
+      {row.map((data) => {
+        const isBig = data.toString().length > 20
+        const shortData = shortDataContent(data)
+        return (
+          <td key={id} className="text-left p-5 font-normal">
+            <span title={isBig ? data.toString() : ""}>{shortData}</span>
+          </td>
+        )
+      })}
       <td className="p-5">
         {moreActions ? (
           <div className="flex gap-4">

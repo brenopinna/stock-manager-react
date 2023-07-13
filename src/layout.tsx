@@ -15,9 +15,9 @@ export default function RootLayout() {
   const storageDataState = useLocalStorage(localStorageInitialData)
 
   return (
-    <div className="min-h-screen text-white bg-primary grid grid-rows-[min-content_auto_min-content]">
+    <div className="min-h-screen text-white bg-primary flex flex-col">
       <Header />
-      <main className="px-8 pb-4 grid gap-8 content-start">
+      <main className="px-8 pb-4 grid gap-8 content-start overflow-auto flex-grow">
         <StorageDataContext.Provider value={storageDataState}>
           <Outlet />
         </StorageDataContext.Provider>
