@@ -11,8 +11,6 @@ export default function Item() {
   const { amount, category, id, name, description, price, createdAt, updatedAt } =
     useLoaderData() as ItemData
 
-  console.log(updatedAt)
-
   return (
     <div className="grid gap-6">
       <div className="grid  sm:flex gap-3">
