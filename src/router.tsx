@@ -39,6 +39,7 @@ const router = createBrowserRouter([
           {
             path: ":itemId/edit",
             element: <EditItem />,
+            loader: itemLoader,
           },
           {
             path: "new-item",
