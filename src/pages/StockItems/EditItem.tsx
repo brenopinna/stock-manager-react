@@ -9,7 +9,7 @@ export default function EditItem() {
   return (
     <>
       <p className="font-thin text-2xl">Atualizar Item - {name}</p>
-      <ItemForm action="update" />
+      <ItemForm />
     </>
   )
 }

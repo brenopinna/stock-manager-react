@@ -1,5 +1,5 @@
 import ItemForm from "../../components/ItemForm"
 
 export default function NewItem() {
-  return <ItemForm action="create" />
+  return <ItemForm />
 }

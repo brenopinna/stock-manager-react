@@ -37,13 +37,12 @@ const router = createBrowserRouter([
             loader: itemLoader,
           },
           {
-            path: "new-item",
-            element: <NewItem />,
+            path: ":itemId/edit",
+            element: <EditItem />,
           },
           {
-            path: "edit/:itemId",
-            element: <EditItem />,
-            loader: itemLoader,
+            path: "new-item",
+            element: <NewItem />,
           },
         ],
       },

@@ -1,72 +1,85 @@
-import { FormEvent, useContext, useState } from "react"
+import { FormEvent, useContext, useEffect, useState } from "react"
 
-import { useLoaderData, useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import dayjs from "dayjs"
 
 import Input from "./Input"
 import InputContainer from "./InputContainer"
 
-import ItemData from "../../types/item-data"
-
 import StorageDataContext from "../../contexts/StorageData"
 
-interface ItemFormProps {
-  action: "create" | "update"
+import ItemData from "../../types/item-data"
+
+type FormItemData = Omit<ItemData, "id" | "createdAt" | "updatedAt"> & {
+  id?: string
+  createdAt?: string
+  updatedAt?: string
 }
 
-export default function ItemForm({ action }: ItemFormProps) {
-  const originalItemInfo = useLoaderData() as ItemData
+const defaultItemData: FormItemData = {
+  name: "",
+  amount: 0,
+  price: 0,
+  category: "",
+  description: "",
+}
+
+export default function ItemForm() {
   const [storage, setStorage] = useContext(StorageDataContext)
+
   const navigate = useNavigate()
 
-  const [name, setName] = useState(() => getInitialStateValue<string>("name"))
-  const [amount, setAmount] = useState(() => getInitialStateValue<number>("amount"))
-  const [price, setPrice] = useState(() => getInitialStateValue<number>("price"))
-  const [category, setCategory] = useState(() => getInitialStateValue<string>("category"))
-  const [description, setDescription] = useState(() =>
-    getInitialStateValue<string>("description"),
-  )
+  const { itemId } = useParams()
+  const [originalItem] = useState(() => storage.find((item) => item.id === itemId))
 
-  function getInitialStateValue<T>(stateName: keyof ItemData) {
-    if (action === "update") {
-      return originalItemInfo[stateName] as T
+  const [itemData, setItemData] = useState(() => {
+    if (originalItem) {
+      return {
+        ...defaultItemData,
+        ...originalItem,
+      }
     }
 
-    return ""
-  }
+    return { ...defaultItemData }
+  })
+
+  useEffect(() => {
+    if (itemId) {
+      const newItemData = { ...storage.find((item) => item.id === itemId)! }
+      setItemData(newItemData)
+    }
+  }, [])
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    setName("")
-    setAmount("")
-    setPrice("")
-    setCategory("")
-    setDescription("")
-
-    const itemData: ItemData = {
-      name,
-      amount: +amount,
-      price: +price,
-      category,
-      description,
-      id: action === "create" ? crypto.randomUUID() : originalItemInfo.id,
-      createdAt: action === "create" ? dayjs().toString() : originalItemInfo.createdAt,
+    const newItemData = {
+      ...itemData,
+      updatedAt: itemId ? dayjs().toISOString() : undefined,
     }
 
-    if (action === "update") {
-      itemData.updatedAt = dayjs().toString()
-    }
+    setStorage(
+      (() => {
+        if (itemId) {
+          storage.splice(
+            storage.findIndex((data) => data.id === itemId),
+            1,
+            newItemData as ItemData,
+          )
+          return storage
+        }
 
-    if (action === "create") {
-      setStorage(storage.concat(itemData))
-    } else if (action === "update") {
-      const oldItem = storage.find((data) => data.id === originalItemInfo.id) as ItemData
-      const newStorage = storage.map((data) => (data === oldItem ? itemData : data))
-
-      setStorage(newStorage)
-    }
+        return [
+          ...storage,
+          {
+            ...newItemData,
+            createdAt: dayjs().toISOString(),
+            id: crypto.randomUUID(),
+          },
+        ]
+      })(),
+    )
 
     navigate("/items", { replace: true })
     alert("Item salvo com sucesso!")
@@ -79,9 +92,11 @@ export default function ItemForm({ action }: ItemFormProps) {
       <InputContainer>
         <label htmlFor="name">Nome</label>
         <Input
-          required={action === "create"}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          required
+          value={itemData.name}
+          onChange={(e) =>
+            setItemData((data) => ({ ...data, [e.target.name]: e.target.value }))
+          }
           type="text"
           name="name"
           id="name"
@@ -90,9 +105,11 @@ export default function ItemForm({ action }: ItemFormProps) {
       <InputContainer>
         <label htmlFor="amount">Quantidade</label>
         <Input
-          required={action === "create"}
-          value={amount}
-          onChange={(e) => setAmount(+e.target.value)}
+          value={itemData.amount}
+          required
+          onChange={(e) =>
+            setItemData((data) => ({ ...data, [e.target.name]: +e.target.value }))
+          }
           type="number"
           min={1}
           max={Number.MAX_SAFE_INTEGER}
@@ -104,9 +121,11 @@ export default function ItemForm({ action }: ItemFormProps) {
       <InputContainer>
         <label htmlFor="price">Preço</label>
         <Input
-          required={action === "create"}
-          value={price}
-          onChange={(e) => setPrice(+e.target.value)}
+          value={itemData.price}
+          required
+          onChange={(e) =>
+            setItemData((data) => ({ ...data, [e.target.name]: +e.target.value }))
+          }
           type="number"
           min={0.01}
           max={Number.MAX_SAFE_INTEGER}
@@ -118,9 +137,11 @@ export default function ItemForm({ action }: ItemFormProps) {
       <InputContainer>
         <label htmlFor="category">Categoria</label>
         <Input
-          required={action === "create"}
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={itemData.category}
+          required
+          onChange={(e) =>
+            setItemData((data) => ({ ...data, [e.target.name]: e.target.value }))
+          }
           type="text"
           name="category"
           id="category"
@@ -129,9 +150,11 @@ export default function ItemForm({ action }: ItemFormProps) {
       <InputContainer className="col-span-full">
         <label htmlFor="description">Descrição</label>
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required={action === "create"}
+          value={itemData.description}
+          onChange={(e) =>
+            setItemData((data) => ({ ...data, [e.target.name]: e.target.value }))
+          }
+          required
           name="description"
           id="description"
           className="h-[200px] resize-none bg-secondary rounded-md px-4 py-2 focus:outline-none"
