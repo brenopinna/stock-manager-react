@@ -2,14 +2,14 @@ import { useContext } from "react"
 
 import { useNavigate, useParams } from "react-router-dom"
 
-import StorageDataContext from "../../contexts/StorageData"
+import DataContext from "../../../contexts/DataContext"
 
-import ItemData from "../../types/item-data"
+import ItemData from "../../../types/item-data"
 
 type DeleteProps = { itemId: string }
 
 export default function Delete({ itemId }: DeleteProps) {
-  const [storage, setStorage] = useContext(StorageDataContext)
+  const [storage, setStorage] = useContext(DataContext)
   const params = useParams()
   const navigate = useNavigate()
 

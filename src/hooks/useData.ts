@@ -1,9 +1,10 @@
 import { useState } from "react"
 
 import Data from "../types/data"
-import useLocalStorageReturn from "../types/use-local-storage-return"
+import useDataReturn from "../types/use-data-return"
 
-export default function useLocalStorage(initialData: Data): useLocalStorageReturn {
+export default function useData(): useDataReturn {
+  const initialData = JSON.parse(localStorage.getItem("items") ?? "[]") as Data
   const [data, setData] = useState(initialData)
 
   function setLocalStorage(newData: Data) {

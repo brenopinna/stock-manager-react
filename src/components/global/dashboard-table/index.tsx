@@ -1,9 +1,9 @@
-import TableBody from "./TableBody"
+import TableBody from "./table-body"
 import TableHead from "./TableHead"
 
-import { DashboardTableDataContext } from "../../contexts/DashboardTableData"
+import { DashboardTableDataContext } from "../../../contexts/DashboardTableDataContext"
 
-import DashboardTableData from "../../types/dashboard-table-data"
+import DashboardTableData from "../../../types/dashboard-table-data"
 
 interface DashboardTableProps extends DashboardTableData {
   moreActions?: boolean

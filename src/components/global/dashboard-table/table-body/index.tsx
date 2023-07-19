@@ -1,8 +1,8 @@
 import { useContext } from "react"
 
-import ItemData from "../../../types/item-data"
+import ItemData from "../../../../types/item-data"
 
-import { DashboardTableDataContext } from "../../../contexts/DashboardTableData"
+import { DashboardTableDataContext } from "../../../../contexts/DashboardTableDataContext"
 import TableBodyRow from "./TableBodyRow"
 
 interface TableBodyProps {

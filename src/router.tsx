@@ -5,11 +5,11 @@ import RootLayout from "./layout"
 import GeneralErrorBoundary from "./error-boundaries/GeneralErrorBoundary"
 
 import Home from "./pages/Home"
-import StockItemsLayout from "./pages/StockItems/layout"
-import Items from "./pages/StockItems"
-import Item from "./pages/StockItems/Item"
-import NewItem from "./pages/StockItems/NewItem"
-import EditItem from "./pages/StockItems/EditItem"
+import ItemsLayout from "./components/items/layout"
+import Items from "./pages/items"
+import Item from "./pages/items/Details"
+import New from "./pages/items/New"
+import Edit from "./pages/items/Edit"
 
 import { itemLoader } from "./loaders/item"
 
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "items",
-        element: <StockItemsLayout />,
+        element: <ItemsLayout />,
         children: [
           {
             index: true,
@@ -38,12 +38,12 @@ const router = createBrowserRouter([
           },
           {
             path: ":itemId/edit",
-            element: <EditItem />,
+            element: <Edit />,
             loader: itemLoader,
           },
           {
             path: "new-item",
-            element: <NewItem />,
+            element: <New />,
           },
         ],
       },

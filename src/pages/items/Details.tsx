@@ -4,8 +4,8 @@ import dayjs from "dayjs"
 
 import ItemData from "../../types/item-data"
 
-import Delete from "../../components/Buttons/Delete"
-import Update from "../../components/Buttons/Update"
+import Delete from "../../components/global/buttons/Delete"
+import Update from "../../components/global/buttons/Update"
 
 export default function Item() {
   const { amount, category, id, name, description, price, createdAt, updatedAt } =

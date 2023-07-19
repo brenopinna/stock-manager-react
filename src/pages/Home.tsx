@@ -1,24 +1,18 @@
-import { useContext } from "react"
-
-import DashboardData from "../components/DashboardData"
-import DashboardTable from "../components/DashboardTable"
-import NoItems from "../components/NoItems"
-
-import StorageDataContext from "../contexts/StorageData"
-
-import getOrganizedHomeData from "../utils/getOrganizedHomeData"
 import { Link } from "react-router-dom"
 
-export default function Home() {
-  const [items] = useContext(StorageDataContext)
+import DashboardData from "../components/home/DashboardData"
+import DashboardTable from "../components/global/dashboard-table"
+import NoItems from "../components/global/NoItems"
 
-  if (!items.length) {
-    return (
-      <>
-        <h1 className="text-5xl font-thin">Dashboard</h1>
-        <NoItems />
-      </>
-    )
+import useHome from "../hooks/useHome"
+
+import useHomeReturn from "../types/use-home-return"
+
+export default function Home() {
+  const homeData = useHome() as useHomeReturn
+
+  if (!homeData) {
+    return <NoItems />
   }
 
   const {
@@ -28,11 +22,12 @@ export default function Home() {
     runningOutDashboardTableScheme,
     runningOutItemsAmount,
     totalOfItems,
-  } = getOrganizedHomeData(items)
+  } = homeData
 
   return (
     <>
       <h1 className="text-5xl font-thin">Dashboard</h1>
+
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardData title="Diversidade de itens" data={differentKindsOfItems} />
         <DashboardData title="Inventário total" data={totalOfItems} />

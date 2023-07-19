@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom"
 
-export default function StockItemsLayout() {
+export default function ItemsLayout() {
   const location = useLocation()
   const actualRoute = location.pathname
     .split("/")

@@ -1,7 +1,7 @@
-import { shortDataContent } from "../../../utils/shortDataContent"
-import Delete from "../../Buttons/Delete"
-import Details from "../../Buttons/Details"
-import Update from "../../Buttons/Update"
+import { shortDataContent } from "../../../../utils/shortDataContent"
+import Delete from "../../buttons/Delete"
+import Details from "../../buttons/Details"
+import Update from "../../buttons/Update"
 
 interface TableBodyRowProps {
   row: Array<string | number>

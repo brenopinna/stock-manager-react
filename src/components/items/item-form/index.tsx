@@ -7,9 +7,9 @@ import dayjs from "dayjs"
 import Input from "./Input"
 import InputContainer from "./InputContainer"
 
-import StorageDataContext from "../../contexts/StorageData"
+import DataContext from "../../../contexts/DataContext"
 
-import ItemData from "../../types/item-data"
+import ItemData from "../../../types/item-data"
 
 type FormItemData = Omit<ItemData, "id" | "createdAt" | "updatedAt"> & {
   id?: string
@@ -26,7 +26,7 @@ const defaultItemData: FormItemData = {
 }
 
 export default function ItemForm() {
-  const [storage, setStorage] = useContext(StorageDataContext)
+  const [storage, setStorage] = useContext(DataContext)
 
   const navigate = useNavigate()
 

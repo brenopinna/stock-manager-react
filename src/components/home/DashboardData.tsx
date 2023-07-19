@@ -1,4 +1,4 @@
-import { shortDataContent } from "../utils/shortDataContent"
+import { shortDataContent } from "../../utils/shortDataContent"
 
 interface DashboardDataProps {
   title: string

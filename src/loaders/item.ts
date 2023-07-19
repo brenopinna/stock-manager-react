@@ -1,11 +1,13 @@
 import { LoaderFunction } from "react-router-dom"
 
-import { getLocalStorageData } from "../utils/getLocalStorageData"
+import Data from "../types/data"
 
 export const itemLoader: LoaderFunction = ({ params }) => {
   const { itemId } = params
 
-  const data = getLocalStorageData()
+  const localStorageContent: string = localStorage.getItem("items") ?? "[]"
+
+  const data = JSON.parse(localStorageContent) as Data
 
   const item = data.find((data) => data.id === itemId)
 

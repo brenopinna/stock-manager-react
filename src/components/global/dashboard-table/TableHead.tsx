@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { DashboardTableDataContext } from "../../contexts/DashboardTableData"
+import { DashboardTableDataContext } from "../../../contexts/DashboardTableDataContext"
 
 export default function TableHead() {
   const { titles } = useContext(DashboardTableDataContext)

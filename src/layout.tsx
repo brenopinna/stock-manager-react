@@ -1,26 +1,22 @@
 import { Outlet } from "react-router-dom"
 
-import Header from "./components/Header"
-import Footer from "./components/Footer"
+import Header from "./components/global/Header"
+import Footer from "./components/global/Footer"
 
-import StorageDataContext from "./contexts/StorageData"
+import DataContext from "./contexts/DataContext"
 
-import useLocalStorage from "./hooks/useLocalStorage"
-
-import { getLocalStorageData } from "./utils/getLocalStorageData"
-
-const localStorageInitialData = getLocalStorageData()
+import useData from "./hooks/useData"
 
 export default function RootLayout() {
-  const storageDataState = useLocalStorage(localStorageInitialData)
+  const DataState = useData()
 
   return (
     <div className="min-h-screen text-white bg-primary flex flex-col">
       <Header />
       <main className="px-8 pb-4 grid gap-8 content-start overflow-auto flex-grow">
-        <StorageDataContext.Provider value={storageDataState}>
+        <DataContext.Provider value={DataState}>
           <Outlet />
-        </StorageDataContext.Provider>
+        </DataContext.Provider>
       </main>
       <Footer />
     </div>

@@ -1,7 +1,16 @@
-import DashboardTableData from "../types/dashboard-table-data"
-import Data from "../types/data"
+import { useContext } from "react"
 
-export default function getAllItemsDashboardScheme(items: Data): DashboardTableData {
+import DataContext from "../contexts/DataContext"
+
+import DashboardTableData from "../types/dashboard-table-data"
+
+export default function useDashboard(): DashboardTableData | null {
+  const [items] = useContext(DataContext)
+
+  if (!items.length) {
+    return null
+  }
+
   return {
     titles: [
       { text: "ID", relatedTo: "id" },
